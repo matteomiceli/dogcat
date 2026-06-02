@@ -1,16 +1,11 @@
+import { Json } from "./types";
+
 export class PayloadValidationError extends Error {
   constructor(msg?: string) {
-    super(msg)
+    super(msg);
     this.name = "PayloadValidationError";
   }
 }
-
-// Hono's JSON parser handles incoming JSON validation for us, but this type
-// gives us something to work with beyond `any`.
-type JsonPrimitive = string | boolean | null | number;
-type JsonArray = JsonPrimitive[];
-type JsonObject = Record<string, JsonPrimitive>;
-type Json = JsonPrimitive | JsonArray | JsonObject;
 
 interface Payload {
   input: Json;

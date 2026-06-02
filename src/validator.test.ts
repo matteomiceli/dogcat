@@ -1,6 +1,5 @@
 import {
   isValidPayload,
-  PayloadValidationError,
   validatePayload,
 } from "./validator.js";
 import { test } from "node:test";
