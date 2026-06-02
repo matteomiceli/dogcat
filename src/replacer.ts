@@ -8,24 +8,30 @@ export function replacer(
   input: Json,
   match: string,
   replacement: string,
-  // TODO implement maxReplacements
   maxReplacements?: number,
+  // State as an object so our count is a stable reference
+  state: { count: number } = { count: 0 },
 ): Json {
+  if (maxReplacements !== undefined && state.count >= maxReplacements) {
+    return input;
+  }
+
   if (Array.isArray(input)) {
     for (const [i, val] of input.entries()) {
-      input[i] = replacer(val, match, replacement, maxReplacements);
+      input[i] = replacer(val, match, replacement, maxReplacements, state);
     }
     return input;
   }
 
   if (input !== null && typeof input === "object") {
     for (const [i, val] of Object.entries(input)) {
-      input[i] = replacer(val, match, replacement, maxReplacements);
+      input[i] = replacer(val, match, replacement, maxReplacements, state);
     }
     return input;
   }
 
   if (input === match) {
+    state.count++;
     return replacement;
   }
 
