@@ -1,9 +1,8 @@
-import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { PayloadValidationError, validatePayload } from "./validator";
-import { replaceDogWithCat, replacer } from "./replacer";
+import { replaceDogWithCat } from "./replacer";
 
-const app = new Hono();
+export const app = new Hono();
 
 app.get("/", (ctx) => {
   return ctx.html(`<h1>Usage Instructions</h1>
@@ -14,7 +13,7 @@ You can include an optional <code>maxReplacements</code> field to limit how many
 app.post("/replace", async (ctx) => {
   const payload = await ctx.req.json();
   const { input, maxReplacements } = validatePayload(payload);
-  const replaced = replaceDogWithCat(input, maxReplacements)
+  const replaced = replaceDogWithCat(input, maxReplacements);
   return ctx.json(replaced);
 });
 
@@ -32,5 +31,3 @@ app.onError((err, ctx) => {
 
   return ctx.json({ error: "Internal Server Error" }, 500);
 });
-
-serve(app, (info) => console.log(`Server running at localhost:${info.port}`));
