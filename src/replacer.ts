@@ -37,3 +37,7 @@ export function replacer(
 
   return input;
 }
+
+export function replaceDogWithCat(input: Json, maxReplacements?: number) {
+  return replacer(input, "dog", "cat", maxReplacements)
+}

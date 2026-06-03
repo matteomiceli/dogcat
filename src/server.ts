@@ -1,7 +1,7 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { PayloadValidationError, validatePayload } from "./validator";
-import { replacer } from "./replacer";
+import { replaceDogWithCat, replacer } from "./replacer";
 
 const app = new Hono();
 
@@ -14,7 +14,7 @@ You can include an optional <code>maxReplacements</code> field to limit how many
 app.post("/replace", async (ctx) => {
   const payload = await ctx.req.json();
   const { input, maxReplacements } = validatePayload(payload);
-  const replaced = replacer(input, "dog", "cat", maxReplacements)
+  const replaced = replaceDogWithCat(input, maxReplacements)
   return ctx.json(replaced);
 });
 
