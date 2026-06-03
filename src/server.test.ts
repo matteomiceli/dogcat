@@ -1,6 +1,7 @@
 import { test, describe } from "node:test";
 import assert from "node:assert";
 import { app } from "./server";
+import largeJsonFixture from "./testFixtures/64_kb.json" with {type: 'json'}
 
 describe("server API tests", () => {
   test("returns replaced JSON on valid request", async () => {
@@ -35,5 +36,16 @@ describe("server API tests", () => {
     assert.equal(res.status, 400);
     const result = await res.json();
     assert.deepEqual(result, { error: "Inavlid payload, please provide an input property" });
+  });
+
+  test("returns server error for payload over 128kb limit", async () => {
+    const res = await app.request("/replace", {
+      method: "POST",
+      // Valid JSON but does not conform to the expected payload shape
+      body: JSON.stringify(largeJsonFixture),
+    });
+    assert.equal(res.status, 413);
+    const result = await res.text();
+    assert.deepEqual(result, "Payload Too Large");
   });
 });
