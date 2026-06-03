@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert";
 import { replacer } from "./replacer";
-import { Json } from "./types";
+import { Json } from "../types";
 
 const replacerCases = [
   {

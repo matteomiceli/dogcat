@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { bodyLimit } from "hono/body-limit";
-import { PayloadValidationError, validatePayload } from "./validator";
-import { replaceDogWithCat } from "./replacer";
+import { PayloadValidationError, validatePayload } from "./service/validator";
+import { replaceDogWithCat } from "./service/replacer";
 
 const KILOBYTES = 1024;
 

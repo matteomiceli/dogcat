@@ -1,4 +1,4 @@
-import { Json } from "./types";
+import { Json } from "../types";
 
 export class PayloadValidationError extends Error {
   constructor(msg?: string) {
